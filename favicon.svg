@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22"/>
+      <stop offset="100%" stop-color="#064e3b"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="url(#gold)" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.6"/>
+  <!-- Clock Circle -->
+  <circle cx="32" cy="32" r="23" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <!-- Clock ticks -->
+  <line x1="32" y1="12" x2="32" y2="15" stroke="url(#gold)" stroke-width="2"/>
+  <line x1="32" y1="49" x2="32" y2="52" stroke="url(#gold)" stroke-width="2"/>
+  <line x1="12" y1="32" x2="15" y2="32" stroke="url(#gold)" stroke-width="2"/>
+  <line x1="49" y1="32" x2="52" y2="32" stroke="url(#gold)" stroke-width="2"/>
+  <!-- Crescent inside clock -->
+  <path d="M 32 18 A 14 14 0 0 0 32 46 A 11 11 0 0 1 32 24 A 14 14 0 0 0 32 18 Z" fill="url(#gold)"/>
+  <!-- Clock hands pointing to Fajr/Asr -->
+  <line x1="32" y1="32" x2="32" y2="21" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="32" y1="32" x2="41" y2="36" stroke="#34d399" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="2.5" fill="#fef08a"/>
+</svg>
