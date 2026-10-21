@@ -583,6 +583,9 @@
       background: rgba(201,168,76,0.22); font-weight: 700;
     }
 
+    /* ===== SECTIONS SCROLL OFFSET ===== */
+    #home, #prayers, #qibla, #azan, #monthly { scroll-margin-top: 75px; }
+
     /* ===== AZAN SECTION ===== */
     .azan-section {
       background: linear-gradient(135deg, var(--primary-dark) 0%, #164e2f 100%);
@@ -608,7 +611,8 @@
       border-radius: 12px; padding: 14px 18px;
     }
     .aspan-ar { font-family: 'Amiri', serif; font-size: 1.25rem; color: var(--gold); }
-    .aspan-en { font-size: 0.82rem; color: rgba(255,255,255,0.75); margin-top: 4px; }
+    .aspan-bn { font-size: 0.88rem; color: #a7f3d0; margin-top: 4px; font-weight: 600; }
+    .aspan-en { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
 
     /* ===== MODAL DIALOGS ===== */
     .modal-overlay {
@@ -913,49 +917,30 @@
     <div class="section-line"></div>
   </div>
   <div class="azan-wrap">
-    <div class="audio-player-card">
-      <div>
-        <h4 style="font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);margin-bottom:4px;">
-          <i class="fas fa-volume-up" style="margin-right:8px;"></i> Listen to Makkah Azan
-        </h4>
-        <p style="font-size:0.85rem;color:rgba(255,255,255,0.75);">Authentic Adhan recitation from Masjid al-Haram</p>
+    <!-- Reciter Selector & Player Card -->
+    <div class="audio-player-card" style="flex-direction:column;gap:14px;align-items:stretch;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
+        <div>
+          <h4 id="azanPlayerTitle" style="font-family:'Cinzel',serif;font-size:1.15rem;color:var(--gold);margin-bottom:4px;">
+            <i class="fas fa-volume-up" style="margin-right:8px;"></i> ক্বারী মুহাম্মদ ওবায়দুল্লাহ (রহ.) — বিটিভি ও বেতারের ঐতিহাসিক আযান
+          </h4>
+          <p id="azanPlayerSubtitle" style="font-size:0.85rem;color:rgba(255,255,255,0.8);">
+            বাংলাদেশ টেলিভিশন ও বাংলাদেশ বেতারে চার দশক প্রচারিত কালজয়ী সুমধুর আযান
+          </p>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <label style="font-size:0.8rem;color:var(--gold);font-weight:600;">ক্বারী / মুয়াজ্জিন:</label>
+          <select id="azanReciterSelect" onchange="changeAzanReciter()" style="background:rgba(0,0,0,0.4);border:1px solid var(--gold);color:white;padding:6px 12px;border-radius:10px;font-size:0.85rem;outline:none;">
+            <option value="audio/azan-obaidullah.mp3" data-title="ক্বারী মুহাম্মদ ওবায়দুল্লাহ (রহ.) — বিটিভি ও বেতারের ঐতিহাসিক আযান" data-sub="বাংলাদেশ টেলিভিশন ও বাংলাদেশ বেতারে চার দশক প্রচারিত কালজয়ী সুমধুর আযান" selected>ক্বারী ওবায়দুল্লাহ (BTV/Betar)</option>
+            <option value="audio/azan-makkah.mp3" data-title="শায়খ আলী আহমদ মোল্লা — মসজিদুল হারাম, মক্কা" data-sub="পবিত্র কাবা প্রাঙ্গণে চার দশক ধরে প্রতিধ্বনিত বিশ্ববিখ্যাত গমগমে আযান">মক্কা শরীফ (শায়খ আলী মোল্লা)</option>
+            <option value="audio/azan-madinah.mp3" data-title="শায়খ এসাম বুখারী — মসজিদে নববী, মদীনা মুনাওয়ারা" data-sub="নবী করীম (সা.)-এর পবিত্র রওজা মোবারকের সান্নিধ্যে অত্যন্ত বিনম্র ও শান্ত সুরের আযান">মদীনা শরীফ (শায়খ এসাম বুখারী)</option>
+            <option value="audio/azan-alaqsa.mp3" data-title="শায়খ নাজী কাযযায — পবিত্র মসজিদুল আকসা" data-sub="মুসলমানদের প্রথম কিবলা পবিত্র মসজিদুল আকসার অনন্য ঐতিহাসিক আযান">মসজিদুল আকসা (বায়তুল মুকাদ্দাস)</option>
+            <option value="audio/azan-fajr.mp3" data-title="ফজরের সুমধুর আযান — ক্বারী আব্দুল বাসিত সুরধারা" data-sub="ঘুম থেকে সালাত উত্তম (আস-সালাতু খাইরুম মিনান নাওম) সংযোজনসহ">ফজর স্পেশাল (ঘুম থেকে সালাত উত্তম)</option>
+            <option value="audio/azan-egypt.mp3" data-title="ঐতিহ্যবাহী কায়রো ও আল-আজহার আযান" data-sub="প্রাচীন মিশরের শতবর্ষী ঐতিহ্যবাহী ক্লাসিক্যাল মাক্বাম আযান">মিশরীয় কায়রো আযান</option>
+            <option value="audio/azan-turkey.mp3" data-title="ইস্তাম্বুল অটোমান ব্লু মস্ক আযান" data-sub="সুলতান আহমেদ মসজিদের ঐতিহ্যবাহী মেলোডিয়াস সেগাহ সুরধারা">ইস্তাম্বুল অটোমান আযান</option>
+          </select>
+        </div>
       </div>
-      <audio id="azanAudio" controls style="outline:none;border-radius:20px;">
-        <source src="https://cdn.islamic.network/audio/adhan/makkah.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-
-    <div class="azan-lines-grid">
-      <div class="azan-line-card">
-        <div class="aspan-ar">اللهُ أَكْبَرُ، اللهُ أَكْبَرُ (×2)</div>
-        <div class="aspan-en">Allah is the Greatest (×4)</div>
-      </div>
-      <div class="azan-line-card">
-        <div class="aspan-ar">أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللهُ (×2)</div>
-        <div class="aspan-en">I bear witness that there is no deity worthy of worship except Allah (×2)</div>
-      </div>
-      <div class="azan-line-card">
-        <div class="aspan-ar">أَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللهِ (×2)</div>
-        <div class="aspan-en">I bear witness that Muhammad is the Messenger of Allah (×2)</div>
-      </div>
-      <div class="azan-line-card">
-        <div class="aspan-ar">حَيَّ عَلَى الصَّلَاةِ (×2)</div>
-        <div class="aspan-en">Come to prayer (×2)</div>
-      </div>
-      <div class="azan-line-card">
-        <div class="aspan-ar">حَيَّ عَلَى الْفَلَاحِ (×2)</div>
-        <div class="aspan-en">Come to success (×2)</div>
-      </div>
-      <div class="azan-line-card">
-        <div class="aspan-ar">اللهُ أَكْبَرُ، اللهُ أَكْبَرُ</div>
-        <div class="aspan-en">Allah is the Greatest (×2)</div>
-      </div>
-      <div class="azan-line-card" style="grid-column:1/-1;">
-        <div class="aspan-ar">لَا إِلٰهَ إِلَّا اللهُ</div>
-        <div class="aspan-en">There is no deity worthy of worship except Allah (×1)</div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- MONTHLY TIMETABLE -->
@@ -1776,6 +1761,29 @@ function generateStars() {
 /* ========================================================
    INITIALIZATION
    ======================================================== */
+/* Azan Reciter Switcher */
+function changeAzanReciter() {
+  const sel = document.getElementById('azanReciterSelect');
+  if(!sel) return;
+  const opt = sel.options[sel.selectedIndex];
+  const audio = document.getElementById('azanAudio');
+  const source = document.getElementById('azanAudioSource');
+  const title = document.getElementById('azanPlayerTitle');
+  const sub = document.getElementById('azanPlayerSubtitle');
+  if (opt && audio && source) {
+    source.src = opt.value;
+    audio.load();
+    audio.play().catch(e => console.warn('Autoplay prevented:', e));
+    if (title && opt.dataset.title) {
+      title.innerHTML = '<i class="fas fa-volume-up" style="margin-right:8px;"></i> ' + opt.dataset.title;
+    }
+    if (sub && opt.dataset.sub) {
+      sub.textContent = opt.dataset.sub;
+    }
+    showToast('Now Playing: ' + opt.text);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   loadSavedPreferences();
   if(localStorage.getItem('salah_theme') === 'dark') {
@@ -1804,6 +1812,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('mobileNav').classList.add('open');
   });
   document.getElementById('mobileNavClose').addEventListener('click', closeMobileNav);
+
+  // Smooth scrolling for header anchor links with navbar offset
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href && href.length > 1) {
+        const targetId = href.slice(1);
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          closeMobileNav();
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          try { history.pushState(null, null, '#' + targetId); } catch(err) {}
+        }
+      }
+    });
+  });
 
   // Load Initial Live Data
   loadDailyPrayerTimes();
